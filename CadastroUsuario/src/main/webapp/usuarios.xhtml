@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_template.xhtml">
+	<ui:define name="content">
+		<div class="usuario-list-item">
+			<div class="card">
+				<h:form id="form">
+					<p:dataTable id="usuarios" var="usuario"
+						value="#{usuarioBean.usuarios}" rowKey="#{usuario.id}"
+						selectionMode="single">
+						<f:facet name="header">
+                			Lista de Usuarios Cadastrados
+           				 </f:facet>
+
+						<p:column headerText="Code">
+							<h:outputText value="#{usuario.id}" />
+						</p:column>
+						<p:column headerText="Name">
+							<h:outputText value="#{usuario.name}" />
+						</p:column>
+						<p:column headerText="Data de Nascimento">
+							<h:outputText value="#{usuario.dataNasc}" />
+						</p:column>
+						<p:column headerText="Telefone">
+							<h:outputText value="#{usuario.telefone}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</div>
+
+		</div>
+
+	</ui:define>
+</ui:composition>
+
+
+
+
+</html>

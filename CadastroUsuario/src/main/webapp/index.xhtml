@@ -9,62 +9,43 @@
 <ui:composition template="_template.xhtml">
 	<ui:define name="content">
 		<div class="card product">
-		    <h:form id="form">
-		        <p:dataView var="usuario" 
-		        			value="#{UsuarioBean.getUsuarios}" 
-		        			rows="5" 
-		        			paginator="true"
-		                    rowsPerPageTemplate="5,10"
-		                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		                    gridIcon="pi pi-th-large" 
-		                    listIcon="pi pi-bars">
-		
-		            <p:dataViewGridItem>
-		                <div class="product-grid-item card border-1">
-		                    <div class="product-grid-item-top">
-		                        <div>
-		                            <i class="pi pi-tag product-category-icon"/>
-		                            <span class="product-category">#{product.category}</span>
-		                        </div>
-		                        <span class="product-badge status-#{product.inventoryStatus.name().toLowerCase()}">#{product.inventoryStatus.text}</span>
-		                    </div>
-		                    <div class="product-grid-item-content">
-		                        <p:graphicImage name="images/product/#{product.image}" library="demo"/>
-		                        <div class="product-name">#{product.name}</div>
-		                        <div class="product-description">#{product.description}</div>
-		                        <p:rating readonly="true" value="#{product.rating}"/>
-		                    </div>
-		                    <div class="product-grid-item-bottom">
-		                        <h:outputText value="#{product.price}" styleClass="product-price">
-		                            <f:convertNumber currencySymbol="$" type="currency"/>
-		                        </h:outputText>
-		                        <p:commandButton type="button"
-		                                            value="Add To Cart"
-		                                            icon="pi pi-shopping-cart"
-		                                            disabled="#{product.inventoryStatus == 'OUTOFSTOCK'}">
-		                        </p:commandButton>
-		                    </div>
-		                </div>
-		            </p:dataViewGridItem>
-		
-		            <p:dataViewListItem>
-		                <div class="setup-list-item">
-		                    <p:graphicImage name="demo/images/product/"/>
-		                    <div class="setup-list-detail">
-		                        <div class="setup-name">#{usuario.name}</div>
-		                        <div class="setup-description">#{usuario.dataNasc}</div>
-		                        <p:rating value="0"/>
-		                    </div>
-		                    <div class="setup-list-action">
-		                        <h:outputText value="#{usuario.telefone}" styleClass="setup-price">
-		                            <f:convertNumber currencySymbol="R$" type="currency"/>
-		                        </h:outputText>
-		                        <p:commandButton type="button" value="Detail" icon="pi pi-search" />
-		                    </div>
-		                </div>
-		            </p:dataViewListItem>
-		        </p:dataView>
-		    </h:form>
+		   <p:messages id="messages"><p:autoUpdate /></p:messages>
+		<h:form>
+		<p:card class="form-card">
+		    <f:facet name="title">
+		       Cadastrar Novo Usuário
+		    </f:facet>
+		   <div class="p-field p-grid">
+			    <h:outputLabel for="name" class="p-col-fixed" style="width:100px" value="Name" />
+			    <div class="p-col">
+			        <p:inputText id="name" value="#{usuarioBean.usuario.name}" required="true" requiredMessage="O campo nome é obrigatório">
+			        	<f:ajax event="blur" render="messages" />
+			        </p:inputText>
+			        
+			    </div>
+			</div>
+			<div class="p-field p-grid">
+			    <label for="date" class="p-col-fixed" style="width:100px" >Data de Nascimento</label>
+			    <div class="p-col">
+			        <!-- <p:inputTextarea id="date" value="#{usuarioBean.usuario.dataNasc}" validatorMessage="O campo data é obrigatório"> -->
+			        	 <p:inputMask id="date" value="#{usuarioBean.usuario.dataNasc}" mask="99/99/9999" required="true" requiredMessage="O campo Data de Nascimento é obrigatório"/>
+			    </div>
+			</div>
+			<div class="p-field p-grid">
+			    <label for="telefone" class="p-col-fixed" style="width:100px">Telefone</label>
+			    <div class="p-col">
+			        <p:inputMask id="phone" value="#{usuarioBean.usuario.telefone}" mask="(99) 9 9999-9999" validateMask="true" required="true" requiredMessage="O campo Telefone é Obrigatório" />
+			    </div>
+			</div>
+			
+		    <f:facet name="footer">
+		        <p:commandButton icon="pi pi-check" value="Save" action="#{usuarioBean.save}">
+		        	<f:ajax execute="@form" render="messages" />
+		        </p:commandButton>
+		        <p:commandButton icon="pi pi-times" value="Cancel" styleClass="ui-button-secondary" style="margin-left: .5em"/>
+		    </f:facet>
+		</p:card>
+		</h:form>
 		</div>
 	</ui:define>
 </ui:composition>
